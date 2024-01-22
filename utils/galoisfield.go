@@ -37,7 +37,7 @@ func (gf *GaloisField) Zero() *GFPoly {
 	return NewGFPoly(gf, []int{0})
 }
 
-// AddOrSub add or substract two numbers
+// AddOrSub add or subtract two numbers
 func (gf *GaloisField) AddOrSub(a, b int) int {
 	return a ^ b
 }

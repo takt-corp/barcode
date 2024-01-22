@@ -6,7 +6,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/boombuler/barcode"
+	"github.com/takt-corp/barcode"
 )
 
 type test struct {
@@ -17,7 +17,7 @@ type test struct {
 }
 
 var tests = []test{
-	test{
+	{
 		Text: "hello world",
 		Mode: Unicode,
 		ECL:  H,
@@ -118,17 +118,25 @@ func Test_Encode(t *testing.T) {
 
 func ExampleEncode() {
 	f, _ := os.Create("qrcode.png")
-	defer f.Close()
+	defer func() {
+		if err := f.Close(); err != nil {
+			fmt.Println(err)
+		}
+	}()
 
 	qrcode, err := Encode("hello world", L, Auto)
 	if err != nil {
 		fmt.Println(err)
 	} else {
 		qrcode, err = barcode.Scale(qrcode, 100, 100)
+
 		if err != nil {
 			fmt.Println(err)
-		} else {
-			png.Encode(f, qrcode)
+			return
+		}
+
+		if err := png.Encode(f, qrcode); err != nil {
+			fmt.Println(err)
 		}
 	}
 }

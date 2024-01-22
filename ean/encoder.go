@@ -4,8 +4,8 @@ package ean
 import (
 	"errors"
 
-	"github.com/boombuler/barcode"
-	"github.com/boombuler/barcode/utils"
+	"github.com/takt-corp/barcode"
+	"github.com/takt-corp/barcode/utils"
 )
 
 type encodedNumber struct {

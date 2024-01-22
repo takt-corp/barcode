@@ -4,8 +4,8 @@ package qr
 import (
 	"image"
 
-	"github.com/boombuler/barcode"
-	"github.com/boombuler/barcode/utils"
+	"github.com/takt-corp/barcode"
+	"github.com/takt-corp/barcode/utils"
 )
 
 type encodeFn func(content string, eccLevel ErrorCorrectionLevel) (*utils.BitList, *versionInfo, error)
@@ -139,25 +139,18 @@ func setMasked(x, y int, val bool, mask int, set func(int, int, bool)) {
 	switch mask {
 	case 0:
 		val = val != (((y + x) % 2) == 0)
-		break
 	case 1:
 		val = val != ((y % 2) == 0)
-		break
 	case 2:
 		val = val != ((x % 3) == 0)
-		break
 	case 3:
 		val = val != (((y + x) % 3) == 0)
-		break
 	case 4:
 		val = val != (((y/2 + x/3) % 2) == 0)
-		break
 	case 5:
 		val = val != (((y*x)%2)+((y*x)%3) == 0)
-		break
 	case 6:
 		val = val != ((((y*x)%2)+((y*x)%3))%2 == 0)
-		break
 	case 7:
 		val = val != ((((y+x)%2)+((y*x)%3))%2 == 0)
 	}
@@ -172,7 +165,7 @@ func iterateModules(occupied *qrcode) <-chan image.Point {
 		curY := occupied.dimension - 1
 		isUpward := true
 
-		for true {
+		for {
 			if isUpward {
 				allPoints <- image.Pt(curX, curY)
 				allPoints <- image.Pt(curX-1, curY)
@@ -347,40 +340,40 @@ func drawFormatInfo(vi *versionInfo, usedMask int, set func(int, int, bool)) {
 }
 
 var versionInfoBitsByVersion = map[byte][]bool{
-	7:  []bool{false, false, false, true, true, true, true, true, false, false, true, false, false, true, false, true, false, false},
-	8:  []bool{false, false, true, false, false, false, false, true, false, true, true, false, true, true, true, true, false, false},
-	9:  []bool{false, false, true, false, false, true, true, false, true, false, true, false, false, true, true, false, false, true},
-	10: []bool{false, false, true, false, true, false, false, true, false, false, true, true, false, true, false, false, true, true},
-	11: []bool{false, false, true, false, true, true, true, false, true, true, true, true, true, true, false, true, true, false},
-	12: []bool{false, false, true, true, false, false, false, true, true, true, false, true, true, false, false, false, true, false},
-	13: []bool{false, false, true, true, false, true, true, false, false, false, false, true, false, false, false, true, true, true},
-	14: []bool{false, false, true, true, true, false, false, true, true, false, false, false, false, false, true, true, false, true},
-	15: []bool{false, false, true, true, true, true, true, false, false, true, false, false, true, false, true, false, false, false},
-	16: []bool{false, true, false, false, false, false, true, false, true, true, false, true, true, true, true, false, false, false},
-	17: []bool{false, true, false, false, false, true, false, true, false, false, false, true, false, true, true, true, false, true},
-	18: []bool{false, true, false, false, true, false, true, false, true, false, false, false, false, true, false, true, true, true},
-	19: []bool{false, true, false, false, true, true, false, true, false, true, false, false, true, true, false, false, true, false},
-	20: []bool{false, true, false, true, false, false, true, false, false, true, true, false, true, false, false, true, true, false},
-	21: []bool{false, true, false, true, false, true, false, true, true, false, true, false, false, false, false, false, true, true},
-	22: []bool{false, true, false, true, true, false, true, false, false, false, true, true, false, false, true, false, false, true},
-	23: []bool{false, true, false, true, true, true, false, true, true, true, true, true, true, false, true, true, false, false},
-	24: []bool{false, true, true, false, false, false, true, true, true, false, true, true, false, false, false, true, false, false},
-	25: []bool{false, true, true, false, false, true, false, false, false, true, true, true, true, false, false, false, false, true},
-	26: []bool{false, true, true, false, true, false, true, true, true, true, true, false, true, false, true, false, true, true},
-	27: []bool{false, true, true, false, true, true, false, false, false, false, true, false, false, false, true, true, true, false},
-	28: []bool{false, true, true, true, false, false, true, true, false, false, false, false, false, true, true, false, true, false},
-	29: []bool{false, true, true, true, false, true, false, false, true, true, false, false, true, true, true, true, true, true},
-	30: []bool{false, true, true, true, true, false, true, true, false, true, false, true, true, true, false, true, false, true},
-	31: []bool{false, true, true, true, true, true, false, false, true, false, false, true, false, true, false, false, false, false},
-	32: []bool{true, false, false, false, false, false, true, false, false, true, true, true, false, true, false, true, false, true},
-	33: []bool{true, false, false, false, false, true, false, true, true, false, true, true, true, true, false, false, false, false},
-	34: []bool{true, false, false, false, true, false, true, false, false, false, true, false, true, true, true, false, true, false},
-	35: []bool{true, false, false, false, true, true, false, true, true, true, true, false, false, true, true, true, true, true},
-	36: []bool{true, false, false, true, false, false, true, false, true, true, false, false, false, false, true, false, true, true},
-	37: []bool{true, false, false, true, false, true, false, true, false, false, false, false, true, false, true, true, true, false},
-	38: []bool{true, false, false, true, true, false, true, false, true, false, false, true, true, false, false, true, false, false},
-	39: []bool{true, false, false, true, true, true, false, true, false, true, false, true, false, false, false, false, false, true},
-	40: []bool{true, false, true, false, false, false, true, true, false, false, false, true, true, false, true, false, false, true},
+	7:  {false, false, false, true, true, true, true, true, false, false, true, false, false, true, false, true, false, false},
+	8:  {false, false, true, false, false, false, false, true, false, true, true, false, true, true, true, true, false, false},
+	9:  {false, false, true, false, false, true, true, false, true, false, true, false, false, true, true, false, false, true},
+	10: {false, false, true, false, true, false, false, true, false, false, true, true, false, true, false, false, true, true},
+	11: {false, false, true, false, true, true, true, false, true, true, true, true, true, true, false, true, true, false},
+	12: {false, false, true, true, false, false, false, true, true, true, false, true, true, false, false, false, true, false},
+	13: {false, false, true, true, false, true, true, false, false, false, false, true, false, false, false, true, true, true},
+	14: {false, false, true, true, true, false, false, true, true, false, false, false, false, false, true, true, false, true},
+	15: {false, false, true, true, true, true, true, false, false, true, false, false, true, false, true, false, false, false},
+	16: {false, true, false, false, false, false, true, false, true, true, false, true, true, true, true, false, false, false},
+	17: {false, true, false, false, false, true, false, true, false, false, false, true, false, true, true, true, false, true},
+	18: {false, true, false, false, true, false, true, false, true, false, false, false, false, true, false, true, true, true},
+	19: {false, true, false, false, true, true, false, true, false, true, false, false, true, true, false, false, true, false},
+	20: {false, true, false, true, false, false, true, false, false, true, true, false, true, false, false, true, true, false},
+	21: {false, true, false, true, false, true, false, true, true, false, true, false, false, false, false, false, true, true},
+	22: {false, true, false, true, true, false, true, false, false, false, true, true, false, false, true, false, false, true},
+	23: {false, true, false, true, true, true, false, true, true, true, true, true, true, false, true, true, false, false},
+	24: {false, true, true, false, false, false, true, true, true, false, true, true, false, false, false, true, false, false},
+	25: {false, true, true, false, false, true, false, false, false, true, true, true, true, false, false, false, false, true},
+	26: {false, true, true, false, true, false, true, true, true, true, true, false, true, false, true, false, true, true},
+	27: {false, true, true, false, true, true, false, false, false, false, true, false, false, false, true, true, true, false},
+	28: {false, true, true, true, false, false, true, true, false, false, false, false, false, true, true, false, true, false},
+	29: {false, true, true, true, false, true, false, false, true, true, false, false, true, true, true, true, true, true},
+	30: {false, true, true, true, true, false, true, true, false, true, false, true, true, true, false, true, false, true},
+	31: {false, true, true, true, true, true, false, false, true, false, false, true, false, true, false, false, false, false},
+	32: {true, false, false, false, false, false, true, false, false, true, true, true, false, true, false, true, false, true},
+	33: {true, false, false, false, false, true, false, true, true, false, true, true, true, true, false, false, false, false},
+	34: {true, false, false, false, true, false, true, false, false, false, true, false, true, true, true, false, true, false},
+	35: {true, false, false, false, true, true, false, true, true, true, true, false, false, true, true, true, true, true},
+	36: {true, false, false, true, false, false, true, false, true, true, false, false, false, false, true, false, true, true},
+	37: {true, false, false, true, false, true, false, true, false, false, false, false, true, false, true, true, true, false},
+	38: {true, false, false, true, true, false, true, false, true, false, false, true, true, false, false, true, false, false},
+	39: {true, false, false, true, true, true, false, true, false, true, false, true, false, false, false, false, false, true},
+	40: {true, false, true, false, false, false, true, true, false, false, false, true, true, false, true, false, false, true},
 }
 
 func drawVersionInfo(vi *versionInfo, set func(int, int, bool)) {

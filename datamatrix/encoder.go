@@ -4,7 +4,7 @@ package datamatrix
 import (
 	"errors"
 
-	"github.com/boombuler/barcode"
+	"github.com/takt-corp/barcode"
 )
 
 // Encode returns a Datamatrix barcode for the given content
@@ -69,11 +69,11 @@ func addPadding(data []byte, toCount int) []byte {
 	}
 	for len(data) < toCount {
 		R := ((149 * (len(data) + 1)) % 253) + 1
-		tmp := 129 + R;
-		if (tmp > 254) {
+		tmp := 129 + R
+		if tmp > 254 {
 			tmp = tmp - 254
 		}
-		   
+
 		data = append(data, byte(tmp))
 	}
 	return data

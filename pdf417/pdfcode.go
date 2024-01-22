@@ -4,8 +4,8 @@ import (
 	"image"
 	"image/color"
 
-	"github.com/boombuler/barcode"
-	"github.com/boombuler/barcode/utils"
+	"github.com/takt-corp/barcode"
+	"github.com/takt-corp/barcode/utils"
 )
 
 type pdfBarcode struct {
@@ -15,7 +15,10 @@ type pdfBarcode struct {
 }
 
 func (c *pdfBarcode) Metadata() barcode.Metadata {
-	return barcode.Metadata{barcode.TypePDF, 2}
+	return barcode.Metadata{
+		CodeKind:   barcode.TypePDF,
+		Dimensions: 2,
+	}
 }
 
 func (c *pdfBarcode) Content() string {

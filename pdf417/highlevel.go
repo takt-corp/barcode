@@ -4,7 +4,7 @@ import (
 	"errors"
 	"math/big"
 
-	"github.com/boombuler/barcode/utils"
+	"github.com/takt-corp/barcode/utils"
 )
 
 type encodingMode byte
@@ -169,7 +169,7 @@ func encodeText(text []rune, submode subMode) (subMode, []int) {
 					break
 				}
 			}
-			break
+
 		case subLower:
 			if isAlphaLower(ch) {
 				if ch == ' ' {
@@ -192,7 +192,7 @@ func encodeText(text []rune, submode subMode) (subMode, []int) {
 					break
 				}
 			}
-			break
+
 		case subMixed:
 			if isMixed(ch) {
 				tmp = append(tmp, mixedMap[ch])
@@ -218,7 +218,7 @@ func encodeText(text []rune, submode subMode) (subMode, []int) {
 					tmp = append(tmp, punctMap[ch])
 				}
 			}
-			break
+
 		default: //subPunct
 			if isPunctuation(ch) {
 				tmp = append(tmp, punctMap[ch])
@@ -241,16 +241,18 @@ func encodeText(text []rune, submode subMode) (subMode, []int) {
 			h = val
 		}
 	}
+
 	if len(tmp)%2 != 0 {
 		result = append(result, (h*30)+29)
 	}
+
 	return submode, result
 }
 
 func determineConsecutiveBinaryCount(msg []byte) int {
 	result := 0
 
-	for i, _ := range msg {
+	for i := range msg {
 		numericCount := determineConsecutiveDigitCount([]rune(string(msg[i:])))
 		if numericCount >= min_numeric_count {
 			break

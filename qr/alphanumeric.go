@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/boombuler/barcode/utils"
+	"github.com/takt-corp/barcode/utils"
 )
 
 const charSet string = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ $%*+-./:"

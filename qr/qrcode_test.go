@@ -7,12 +7,15 @@ import (
 
 func Test_NewQRCode(t *testing.T) {
 	bc := newBarcode(2)
-	if bc == nil {
+
+	if bc == nil || bc.data == nil {
 		t.Fail()
 	}
+
 	if bc.data.Len() != 4 {
 		t.Fail()
 	}
+
 	if bc.dimension != 2 {
 		t.Fail()
 	}

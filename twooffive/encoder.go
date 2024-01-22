@@ -5,8 +5,8 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/boombuler/barcode"
-	"github.com/boombuler/barcode/utils"
+	"github.com/takt-corp/barcode"
+	"github.com/takt-corp/barcode/utils"
 )
 
 const patternWidth = 5

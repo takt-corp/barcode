@@ -1,11 +1,10 @@
 package datamatrix
 
 import (
-	"github.com/boombuler/barcode/utils"
 	"strconv"
-)
 
-type setValFunc func(byte)
+	"github.com/takt-corp/barcode/utils"
+)
 
 type codeLayout struct {
 	matrix *utils.BitList
@@ -123,7 +122,7 @@ func (l *codeLayout) SetValues(data []byte) {
 			idx++
 		}
 
-		for true {
+		for {
 			if (row < l.size.MatrixRows()) && (col >= 0) && !l.Occupied(row, col) {
 				l.SetSimple(row, col, data[idx])
 				idx++
@@ -137,7 +136,7 @@ func (l *codeLayout) SetValues(data []byte) {
 		row += 1
 		col += 3
 
-		for true {
+		for {
 			if (row >= 0) && (col < l.size.MatrixColumns()) && !l.Occupied(row, col) {
 				l.SetSimple(row, col, data[idx])
 				idx++

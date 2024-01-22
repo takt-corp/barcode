@@ -5,8 +5,8 @@ import (
 	"image"
 	"image/color"
 
-	"github.com/boombuler/barcode"
-	"github.com/boombuler/barcode/utils"
+	"github.com/takt-corp/barcode"
+	"github.com/takt-corp/barcode/utils"
 )
 
 type aztecCode struct {
@@ -24,7 +24,10 @@ func (c *aztecCode) Content() string {
 }
 
 func (c *aztecCode) Metadata() barcode.Metadata {
-	return barcode.Metadata{barcode.TypeAztec, 2}
+	return barcode.Metadata{
+		CodeKind:   barcode.TypeAztec,
+		Dimensions: 2,
+	}
 }
 
 func (c *aztecCode) ColorModel() color.Model {

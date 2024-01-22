@@ -5,7 +5,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/boombuler/barcode/utils"
+	"github.com/takt-corp/barcode/utils"
 )
 
 func bitStr(bl *utils.BitList) string {
